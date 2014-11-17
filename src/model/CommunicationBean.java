@@ -1,7 +1,6 @@
-package sandboxjavaserver;
+package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CommunicationBean implements Serializable {
@@ -11,9 +10,9 @@ public class CommunicationBean implements Serializable {
 	public CommunicationBean() {
 	}
 	
-	public CommunicationBean(String command, HashMap data) {
+	public CommunicationBean(String command, HashMap message) {
 		this.command = command;
-		this.data = data;
+		this.data = message;
 	}
 
 	public String getCommand() {

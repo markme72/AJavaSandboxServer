@@ -1,10 +1,9 @@
-package sandboxjavaserver;
+package model;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,10 +28,10 @@ public class AccountBean {
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(
-			name="account_address",
-			joinColumns = { @JoinColumn(name="account_id") },
-			inverseJoinColumns = @JoinColumn( name="address_id")
-			)
+			   name="account_address",
+			   joinColumns = { @JoinColumn(name="account_id") },
+			   inverseJoinColumns = @JoinColumn( name="address_id")
+			   )
 	private Set<AddressBean> addresses = new HashSet<AddressBean>();
 	
 	@OneToMany(mappedBy="anAccount", cascade=CascadeType.ALL, fetch = FetchType.LAZY)

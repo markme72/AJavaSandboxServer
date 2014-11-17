@@ -1,5 +1,10 @@
 package sandboxjavaserver;
 
+import model.AccountBean;
+import model.AddressBean;
+import model.PhoneNumberBean;
+import model.UserBean;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;

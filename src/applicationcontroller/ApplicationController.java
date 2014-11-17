@@ -4,9 +4,10 @@ import handlers.Handler;
 
 import java.util.HashMap;
 
+import model.CommunicationBean;
+
 import org.quickconnectfamily.json.JSONOutputStream;
 
-import sandboxjavaserver.CommunicationBean;
 
 public class ApplicationController {
 	private HashMap<String, Object> applicationFeatures = new HashMap<String, Object>();

@@ -1,8 +1,14 @@
 package handlers;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+
+import model.AccountBean;
+import model.AddressBean;
+import model.CommunicationBean;
+import model.HibernateModel;
+import model.PhoneNumberBean;
+import model.UserBean;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,12 +16,7 @@ import org.hibernate.Transaction;
 import org.quickconnectfamily.json.JSONException;
 import org.quickconnectfamily.json.JSONOutputStream;
 
-import sandboxjavaserver.AccountBean;
-import sandboxjavaserver.AddressBean;
-import sandboxjavaserver.CommunicationBean;
 import sandboxjavaserver.HibernateUtilSingleton;
-import sandboxjavaserver.PhoneNumberBean;
-import sandboxjavaserver.UserBean;
 
 public class NewUserHandler implements Handler {
 	@Override
@@ -42,15 +43,11 @@ public class NewUserHandler implements Handler {
 		anAddress.setCountry((String)aDataMap.get("country"));
 		aPhoneNumber.setPhoneNumber((String)aDataMap.get("phoneNumber"));
 		
-		Session session = HibernateUtilSingleton.getSessionFactory().getCurrentSession();
+		HibernateModel hibernate = new HibernateModel();
 		
-		Transaction transaction = session.beginTransaction();
+		boolean done = hibernate.save(anAccount, anAddress, aPhoneNumber, aUser);
 		
-		Query singleUserQuery = session.createQuery("select u from UserBean as u where u.uname='" + aUser.getUname() + "'");
-		UserBean queriedUser = (UserBean)singleUserQuery.uniqueResult();
-		
-		if (queriedUser != null) {	
-			session.close();
+		if (!done) {	
 			message.put("message", "User already exists");
 			try {
 				outToClient.writeObject(new CommunicationBean("Error", message));
@@ -59,17 +56,6 @@ public class NewUserHandler implements Handler {
 				e.printStackTrace();
 			}
 		}
-		//Many to many relationship
-		anAccount.getAddresses().add(anAddress);
-		
-		//One to many relationship
-		aPhoneNumber.setAnAccount(anAccount);
-		
-		session.save(anAccount);
-		session.save(anAddress);
-		session.save(aPhoneNumber);
-		session.save(aUser);
-		transaction.commit();
 	
 		message.put("message", "User successfully created!");
 		try {

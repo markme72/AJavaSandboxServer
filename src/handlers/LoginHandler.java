@@ -3,14 +3,16 @@ package handlers;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.CommunicationBean;
+import model.HibernateModel;
+import model.UserBean;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.quickconnectfamily.json.JSONException;
 import org.quickconnectfamily.json.JSONOutputStream;
 
-import sandboxjavaserver.CommunicationBean;
 import sandboxjavaserver.HibernateUtilSingleton;
-import sandboxjavaserver.UserBean;
 
 public class LoginHandler implements Handler {
 	@Override
@@ -22,16 +24,11 @@ public class LoginHandler implements Handler {
 		aUser.setUname((String)aDataMap.get("uname"));
 		aUser.setPword((String)aDataMap.get("pword"));
 	
-		Session session = HibernateUtilSingleton.getSessionFactory().getCurrentSession();
+		HibernateModel hibernate = new HibernateModel();
 		
-		session.beginTransaction();
+		boolean done = hibernate.query(aUser);
 		
-		Query singleUserQuery = session.createQuery("select u from UserBean as u where u.uname='" + aUser.getUname() + "'");
-		UserBean queriedUser = (UserBean)singleUserQuery.uniqueResult();
-		
-		session.close();
-		
-		if ((queriedUser == null) || (!queriedUser.getPword().equals(aUser.getPword()))) {
+		if (!done) {
 	        message.put("message", "User credentials incorrect");
 			try {
 				outToClient.writeObject(new CommunicationBean("Error", message));

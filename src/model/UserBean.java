@@ -1,4 +1,4 @@
-package sandboxjavaserver;
+package model;
 
 import java.util.Set;
 
