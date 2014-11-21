@@ -2,7 +2,10 @@
 *.ap_
 .project
 .classpath
-*.xml
+res/value*
+res/menu
+bin/
+AndroidManifest.xml
 *.prefs
 *.apk
 *.html

@@ -1,7 +1,6 @@
 package handlers;
 
 import java.util.HashMap;
-import java.util.Set;
 
 import model.AccountBean;
 import model.AddressBean;
@@ -10,13 +9,9 @@ import model.HibernateModel;
 import model.PhoneNumberBean;
 import model.UserBean;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.quickconnectfamily.json.JSONException;
 import org.quickconnectfamily.json.JSONOutputStream;
 
-import sandboxjavaserver.HibernateUtilSingleton;
 
 public class NewUserHandler implements Handler {
 	@Override

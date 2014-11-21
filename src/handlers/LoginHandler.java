@@ -1,18 +1,13 @@
 package handlers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.CommunicationBean;
 import model.HibernateModel;
 import model.UserBean;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.quickconnectfamily.json.JSONException;
 import org.quickconnectfamily.json.JSONOutputStream;
-
-import sandboxjavaserver.HibernateUtilSingleton;
 
 public class LoginHandler implements Handler {
 	@Override
